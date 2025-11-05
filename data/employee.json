@@ -1,0 +1,16 @@
+[
+  {
+    "id": "EMP001",
+    "name": "Juan Dela Cruz",
+    "position": "Sales Associate",
+    "contact": "09171234567",
+    "photo": "images/default-user.png"
+  },
+  {
+    "id": "EMP002",
+    "name": "Maria Santos",
+    "position": "HR Staff",
+    "contact": "09179876543",
+    "photo": "images/default-user.png"
+  }
+]

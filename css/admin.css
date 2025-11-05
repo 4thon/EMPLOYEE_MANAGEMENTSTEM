@@ -1,0 +1,212 @@
+/* Admin / HR Dashboard styles - JMTS theme */
+:root{
+  --bg:#000;
+  --panel:#111;
+  --accent:#00ffcc;
+  --muted:#9fbfb5;
+  --glass: rgba(255,255,255,0.02);
+}
+*{box-sizing:border-box;font-family:"Poppins",sans-serif}
+body{background:var(--bg);color:#fff;margin:0;min-height:100vh;}
+.adm-header{display:flex;justify-content:space-between;align-items:center;padding:18px 28px;border-bottom:1px solid rgba(255,255,255,0.03)}
+.adm-left{display:flex;align-items:center;gap:14px}
+.adm-logo{width:56px;filter:drop-shadow(0 0 12px var(--accent))}
+.adm-left h1{font-size:1.05rem;color:var(--accent);text-shadow:0 0 8px var(--accent)}
+.adm-right{display:flex;gap:12px;align-items:center}
+.role-chip{background:transparent;border:1px solid rgba(0,255,204,0.08);padding:6px 10px;border-radius:12px;color:var(--muted)}
+.btn{background:linear-gradient(90deg,var(--accent),#007766);border:none;padding:8px 12px;border-radius:10px;color:#000;cursor:pointer;font-weight:600}
+.btn.ghost{background:transparent;border:1px solid rgba(0,255,204,0.08);color:var(--accent)}
+.hidden{display:none}
+.adm-main{display:flex;gap:18px;padding:26px 28px}
+
+/* sidebar */
+.adm-side{width:170px}
+.adm-side nav{display:flex;flex-direction:column;gap:10px}
+.nav-btn{background:transparent;border:1px solid rgba(255,255,255,0.02);padding:10px 12px;border-radius:10px;text-align:left;color:#cfeee8;cursor:pointer;transition:all .18s}
+.nav-btn.active,.nav-btn:hover{box-shadow:0 0 16px rgba(0,255,204,0.06);border-color:var(--accent);color:var(--accent);transform:translateX(6px)}
+
+/* content area */
+.adm-content{flex:1;min-height:70vh}
+.view{display:none}
+.view.active{display:block}
+
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.card{background:var(--panel);padding:16px;border-radius:12px;box-shadow:0 6px 20px rgba(0,255,204,0.08);border:1px solid rgba(0,255,204,0.04)}
+.card-title{color:var(--muted);font-size:13px}
+.card-value{font-size:22px;color:var(--accent);font-weight:700;margin-top:8px}
+
+/* toolbar */
+.toolbar{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px}
+.toolbar input{width:320px;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:var(--glass);color:#fff}
+.toolbar-actions{display:flex;gap:8px}
+
+/* tables */
+.table-wrap{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));padding:12px;border-radius:12px;border:1px solid rgba(0,255,204,0.04)}
+table{width:100%;border-collapse:collapse;color:#eafcff}
+th,td{padding:10px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.03)}
+th{color:var(--accent)}
+tr:hover td{background:rgba(0,255,204,0.02)}
+.photo-thumb{width:48px;height:48px;border-radius:8px;object-fit:cover;border:2px solid rgba(0,255,204,0.06)}
+
+/* modal */
+.modal-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:999}
+.modal{width:520px;background:var(--panel);padding:18px;border-radius:12px;border:1px solid rgba(0,255,204,0.04)}
+.modal h3{color:var(--accent);margin:0 0 12px}
+.modal label{display:block;margin:8px 0;font-size:13px;color:#ddd}
+.modal input[type="text"],.modal input[type="file"],.modal input[type="tel"],.modal select{width:100%;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#fff}
+.modal .img-preview{width:120px;height:120px;border-radius:8px;object-fit:cover;border:2px solid rgba(0,255,204,0.06);display:block;margin:6px 0}
+.modal-overlay.hidden {
+  opacity: 0;
+  pointer-events: none; /* ito ang mahalaga para maklick ang mga nasa ilalim */
+}
+
+/* reports */
+.report-controls{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+.report-preview{background:var(--panel);padding:16px;border-radius:10px;border:1px solid rgba(0,255,204,0.04)}
+
+/* neon popup */
+.neon-popup{position:fixed;top:20px;left:50%;transform:translateX(-50%) scale(0.9);background:rgba(0,0,0,0.9);color:var(--accent);padding:12px 22px;border-radius:10px;border:1px solid var(--accent);box-shadow:0 0 18px var(--accent);opacity:0;transition:all .35s;z-index:10000}
+.neon-popup.show{opacity:1;transform:translateX(-50%) scale(1)}
+/* responsive */
+@media (max-width:1000px){.cards{grid-template-columns:repeat(2,1fr)}.adm-side{display:none}.adm-main{padding:14px}}
+@media (max-width:620px){.cards{grid-template-columns:1fr}.toolbar input{width:100%}}
+
+/* Logout Popup Design */
+.logout-popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.logout-popup.hidden {
+  display: none;
+}
+
+.logout-box {
+  background: #0b0b0b;
+  border: 1px solid #00ffc8;
+  box-shadow: 0 0 20px #00ffc8;
+  padding: 2rem 3rem;
+  border-radius: 1rem;
+  text-align: center;
+  color: #fff;
+  animation: glowIn 0.3s ease-out;
+}
+
+.logout-box h3 {
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+  color: #00ffc8;
+}
+
+.logout-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+@keyframes glowIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+.logout-actions .btn {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+} 
+.logout-actions .btn.confirm {
+  background: #00ffc8;
+  color: #000;
+}
+.logout-actions .btn.cancel {
+  background: transparent;
+  border: 1px solid #00ffc8;
+  color: #00ffc8;
+}
+
+/* === Attendance Edit Modal Theme (JMTS Style) === */
+.modal {
+  background: #0b0b0b;
+  border: 1px solid #00ffc8;
+  box-shadow: 0 0 25px rgba(0, 255, 200, 0.5);
+  border-radius: 1rem;
+  padding: 2rem 2.5rem;
+  width: 400px;
+  color: #fff;
+  text-align: left;
+  animation: glowIn 0.25s ease-out;
+}
+
+.modal h3 {
+  text-align: center;
+  color: #00ffc8;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 10px #00ffc8;
+  font-weight: 600;
+}
+
+.modal input {
+  width: 100%;
+  background: #000;
+  color: #00ffc8;
+  border: 1px solid #00ffc8;
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.modal input:focus {
+  outline: none;
+  box-shadow: 0 0 10px #00ffc8;
+}
+
+.modal-actions {
+  text-align: center;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.modal-actions .btn {
+  min-width: 90px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.modal-actions .btn {
+  background: #00ffc8;
+  color: #000;
+  box-shadow: 0 0 10px #00ffc8;
+}
+
+.modal-actions .btn:hover {
+  box-shadow: 0 0 20px #00ffc8;
+}
+
+.modal-actions .btn.ghost {
+  background: transparent;
+  color: #00ffc8;
+  border: 1px solid #00ffc8;
+}
+
+.modal-actions .btn.ghost:hover {
+  background: rgba(0, 255, 200, 0.1);
+  box-shadow: 0 0 15px #00ffc8;
+}
+@keyframes glowIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+

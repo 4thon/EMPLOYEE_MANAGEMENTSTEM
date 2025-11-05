@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>JMTS — Admin Login</title>
+
+  <style>
+    :root {
+      --bg: #000;
+      --panel: #0f1111;
+      --accent: #00ffcc;
+      --muted: #9fbfb5;
+    }
+    *{box-sizing:border-box;font-family:Poppins,system-ui,Segoe UI,Arial;}
+    body{margin:0;background:radial-gradient(circle at 20% 20%, #061616 0%, #000 60%);color:#eafcff;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+    .login-card{width:380px;background:linear-gradient(180deg,var(--panel),#0b0b0b);border-radius:14px;padding:26px;border:1px solid rgba(0,255,204,0.06);box-shadow:0 10px 40px rgba(0,0,0,0.7);}
+    .logo{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+    .logo img{width:56px;filter:drop-shadow(0 0 12px var(--accent))}
+    h1{font-size:18px;margin:0;color:var(--accent);text-shadow:0 0 8px var(--accent)}
+    p.small{color:#bfeee6;margin:8px 0 18px;font-size:13px}
+
+    label{display:block;color:#cfeee8;font-size:13px;margin-bottom:6px}
+    input[type="text"], input[type="password"]{
+      width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:#071111;color:#e7fffb;margin-bottom:12px;
+    }
+
+    .btn{
+      width:100%;
+      background:linear-gradient(90deg,var(--accent),#007766);
+      border:none;color:#000;padding:10px 12px;border-radius:8px;font-weight:700;cursor:pointer;
+      transition:transform .12s ease,box-shadow .12s ease;
+    }
+    .btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,255,204,0.08)}
+
+    .muted{color:#9fbfb5;font-size:13px;margin-top:10px;text-align:center}
+    .toggle-pass{display:flex;align-items:center;gap:8px;color:#9fffe0;font-size:13px;margin-bottom:12px;cursor:pointer}
+
+    .neon-popup{position:fixed;top:20px;left:50%;transform:translateX(-50%) scale(0.95);background:rgba(0,0,0,.9);color:var(--accent);padding:12px 20px;border-radius:9px;border:1px solid var(--accent);box-shadow:0 0 18px var(--accent);opacity:0;transition:all .28s;z-index:9999}
+    .neon-popup.show{opacity:1;transform:translateX(-50%) scale(1)}
+    @media (max-width:420px){ .login-card{width:100%} }
+  </style>
+</head>
+<body>
+  <div class="login-card" role="main">
+    <div class="logo">
+      <img src="images/jmts-logo.png" alt="JMTS Logo">
+      <div>
+        <h1>JMTS Admin Login</h1>
+        <p class="small">Sign in as Administrator or HR Staff to manage employees & attendance.</p>
+      </div>
+    </div>
+
+    <label for="username">Username</label>
+    <input id="username" type="text" placeholder="username">
+
+    <label for="password">Password</label>
+    <input id="password" type="password" placeholder="password">
+
+    <div class="toggle-pass">
+      <input id="showPass" type="checkbox" />
+      <label for="showPass" style="margin:0;">Show password</label>
+    </div>
+
+    <button id="loginBtn" class="btn">Login</button>
+
+    <p class="muted">Use <strong>admin / admin</strong> to access the system.</p>
+  </div>
+
+  <div id="popup" class="neon-popup" aria-hidden="true"></div>
+
+  <script>
+    (function(){
+      const loginBtn = document.getElementById('loginBtn');
+      const usernameInput = document.getElementById('username');
+      const passwordInput = document.getElementById('password');
+      const showPass = document.getElementById('showPass');
+      const popup = document.getElementById('popup');
+
+      function showPopup(msg, color = '#00ffcc') {
+        popup.textContent = msg;
+        popup.style.borderColor = color;
+        popup.style.color = color;
+        popup.style.boxShadow = `0 0 18px ${color}`;
+        popup.classList.add('show');
+        setTimeout(()=> popup.classList.remove('show'), 2000);
+      }
+
+      // Always reset and ensure default user
+      function ensureDefaultUser() {
+        const defaultUser = [{ username: 'admin', password: 'admin', fullname: 'Administrator', role: 'Admin' }];
+        localStorage.setItem('users', JSON.stringify(defaultUser));
+      }
+      ensureDefaultUser(); // Always recreate clean admin user
+
+      showPass.addEventListener('change', (e) => {
+        passwordInput.type = e.target.checked ? 'text' : 'password';
+      });
+
+      loginBtn.addEventListener('click', () => {
+        const u = usernameInput.value.trim();
+        const p = passwordInput.value;
+
+        if (!u || !p) return showPopup('Please enter username and password', '#ffcc00');
+
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
+        const found = users.find(x => x.username === u && x.password === p);
+
+        if (found) {
+          sessionStorage.setItem('currentUser', JSON.stringify(found));
+          showPopup('Login successful — Redirecting...', '#00ffcc');
+          setTimeout(() => window.location.href = 'dashboard.html', 900);
+        } else {
+          showPopup('Invalid credentials', '#ff4444');
+        }
+      });
+
+      [usernameInput, passwordInput].forEach(inp => {
+        inp.addEventListener('keydown', ev => { if (ev.key === 'Enter') loginBtn.click(); });
+      });
+    })();
+  </script>
+</body>
+</html>
